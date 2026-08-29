@@ -44,19 +44,46 @@ class RUGDDatasetPlayerNode(Node):
         self.current_idx = 0
 
         # Look for dataset files
-        if self.dataset_path and os.path.exists(self.dataset_path):
-            seq_dir = os.path.join(self.dataset_path, self.seq_name)
-            if not os.path.exists(seq_dir):
-                seq_dir = self.dataset_path
-            
-            patterns = ['*.png', '*.jpg', '*.jpeg']
-            for p in patterns:
-                self.image_files.extend(sorted(glob.glob(os.path.join(seq_dir, '**', p), recursive=True)))
+        search_paths = []
+        if self.dataset_path:
+            search_paths.append(self.dataset_path)
+
+        # Also search in installed package share directory and local workspace paths
+        try:
+            from ament_index_python.packages import get_package_share_directory
+            pkg_share = get_package_share_directory('husky_outdoor_nav')
+            search_paths.append(os.path.join(pkg_share, 'data', 'RUGD_sample-data'))
+            search_paths.append(os.path.join(pkg_share, 'data', 'RUGD_sample-data', 'images'))
+        except Exception:
+            pass
+
+        search_paths.extend([
+            '/home/user/ros2_ws/src/husky_outdoor_nav/data/RUGD_sample-data',
+            '/home/user/ros2_ws/src/husky_outdoor_nav/data/RUGD_sample-data/images',
+            '/home/user/ros2_ws/build/husky_outdoor_nav/data/RUGD_sample-data',
+            '/home/user/ros2_ws/build/husky_outdoor_nav/data/RUGD_sample-data/images',
+            '/home/user/rugd_sample',
+            '/home/user/rugd_sample/images',
+        ])
+
+        found_path = None
+        for candidate in search_paths:
+            if os.path.exists(candidate):
+                seq_dir = os.path.join(candidate, self.seq_name)
+                target_dir = seq_dir if os.path.exists(seq_dir) else candidate
+                patterns = ['*.png', '*.jpg', '*.jpeg']
+                files = []
+                for p in patterns:
+                    files.extend(sorted(glob.glob(os.path.join(target_dir, '**', p), recursive=True)))
+                if len(files) > 0:
+                    self.image_files = files
+                    found_path = target_dir
+                    break
 
         if len(self.image_files) > 0:
-            self.get_logger().info(f'Loaded {len(self.image_files)} RUGD frames from {self.dataset_path}')
+            self.get_logger().info(f'Loaded {len(self.image_files)} RUGD frames from {found_path}')
         else:
-            self.get_logger().info('No external RUGD dataset path provided. Using real-time synthetic forest terrain camera generator.')
+            self.get_logger().info('No external RUGD dataset path found. Using real-time synthetic forest terrain camera generator.')
 
         self.timer = self.create_timer(1.0 / self.publish_rate, self.timer_callback)
         self.step_cnt = 0

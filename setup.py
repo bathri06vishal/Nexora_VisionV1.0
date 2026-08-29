@@ -23,6 +23,14 @@ def get_data_files():
             file_paths = [os.path.join(root, f) for f in files]
             data_files.append((dest_dir, file_paths))
             
+    # Recursively add data directory (RUGD sample dataset)
+    if os.path.exists('data'):
+        for root, dirs, files in os.walk('data'):
+            if files:
+                dest_dir = os.path.join('share', package_name, root)
+                file_paths = [os.path.join(root, f) for f in files]
+                data_files.append((dest_dir, file_paths))
+            
     return data_files
 
 setup(
