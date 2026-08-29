@@ -1,0 +1,31 @@
+# NVIDIA Isaac ROS cuVSLAM (Visual SLAM) Parameter Configuration
+# Accelerated Visual-Inertial Odometry for Husky Outdoor Navigation
+visual_slam_node:
+  ros__parameters:
+    use_sim_time: True
+    enable_rectified_pose: true
+    denoise_input_images: false
+    enable_ground_constraint_in_odometry: false
+    enable_localization_n_mapping: true
+    enable_imu_fusion: true
+    gyro_noise_density: 0.000244
+    gyro_random_walk: 0.000019393
+    accel_noise_density: 0.001862
+    accel_random_walk: 0.003
+    calibration_frequency: 200.0
+    image_jitter_threshold_ms: 35.0
+    base_frame: "base_footprint"
+    camera_optical_frames:
+      - "camera_infra1_optical_frame"
+      - "camera_infra2_optical_frame"
+    map_frame: "map"
+    odom_frame: "odom"
+    publish_odom_to_base_tf: true
+    publish_map_to_odom_tf: true
+    invert_map_to_odom_tf: false
+    msg_match_threshold_ms: 10.0
+    multicam_sync_threshold_ms: 5.0
+    enable_observations_view: true
+    enable_landmarks_view: true
+    enable_slam_visualization: true
+    override_publishing_stamp: true

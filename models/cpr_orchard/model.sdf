@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="cpr_orchard">
+    <static>true</static>
+    <link name="orchard_link">
+      <!-- Ground Terrain Visual & Collision -->
+      <visual name="ground_visual">
+        <pose>0 0 0 0 0 1.570796</pose>
+        <geometry>
+          <mesh>
+            <uri>model://cpr_orchard/orchard_world.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="ground_collision">
+        <pose>0 0 0 0 0 1.570796</pose>
+        <geometry>
+          <mesh>
+            <uri>model://cpr_orchard/orchard_world.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>1.2</mu>
+              <mu2>1.0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- Orchard Tree Trunks Visual & Collision -->
+      <visual name="trunks_visual">
+        <pose>0 0 0 0 0 1.570796</pose>
+        <geometry>
+          <mesh>
+            <uri>model://cpr_orchard/orchard_trunks.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="trunks_collision">
+        <pose>0 0 0 0 0 1.570796</pose>
+        <geometry>
+          <mesh>
+            <uri>model://cpr_orchard/orchard_trunks.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <!-- Orchard Tree Leaves / Foliage Visual -->
+      <visual name="leaves_visual">
+        <pose>0 0 0 0 0 1.570796</pose>
+        <geometry>
+          <mesh>
+            <uri>model://cpr_orchard/orchard_leaves.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

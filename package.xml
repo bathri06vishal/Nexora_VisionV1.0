@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>husky_outdoor_nav</name>
+  <version>1.0.0</version>
+  <description>Husky UGV Outdoor Navigation in Gazebo with RUGD Dataset, YOLO11n-seg Semantic Traversability, cuVSLAM, 2.5D Costmap, Smac Hybrid-A*, and Regulated Pure Pursuit</description>
+  <maintainer email="user@todo.todo">Robotics Engineer</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>robot_localization</depend>
+  <depend>nav2_bringup</depend>
+  <depend>nav2_smac_planner</depend>
+  <depend>nav2_regulated_pure_pursuit_controller</depend>
+  <depend>nav2_costmap_2d</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_plugins</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>joint_state_publisher</depend>
+  <depend>rviz2</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+    <gazebo_ros gazebo_model_path="${prefix}/models"/>
+  </export>
+</package>
